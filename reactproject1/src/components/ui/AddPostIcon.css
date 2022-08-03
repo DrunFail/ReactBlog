@@ -1,0 +1,12 @@
+.addPostImg {
+    height: 50px;
+    width: 40px;
+    position: fixed;
+    right: 60px;
+    bottom: 100px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+.addPostImg:hover {
+    opacity: 1;
+}

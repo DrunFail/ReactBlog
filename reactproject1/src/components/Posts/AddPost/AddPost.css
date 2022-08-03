@@ -1,0 +1,33 @@
+.addPost {
+ width: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ margin: auto;
+ height: 350px;
+ margin: 0 10px;
+}
+
+.head {
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.addPostInput {
+    width: 90%;
+    margin-bottom: 15px;
+    border: 1px solid;
+    border-radius: 5px;
+    height:  20px;
+    font: inherit;
+}
+textarea {
+    width: 90%;
+    height: 150px;
+    border-radius: 5px;
+    font: inherit;
+}
+.submit-add {
+    margin-top: 10px;
+    width: 50%;
+}
