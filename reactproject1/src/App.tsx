@@ -5,7 +5,7 @@ import PostItem from './components/Posts/PostItem/PostItem';
 import Modal from './components/ui/modal/Modal';
 
 function App() {
-    const [dataPosts, setDataPosts] = useState([]);
+    const [dataPosts, setDataPosts] = useState<Post[]>([]);
     const [searchResult, setSearchResult] = useState([]);
     const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(10)
@@ -35,6 +35,26 @@ function App() {
     }
 
 
+    function addNewPost(title: string, body: string) {
+
+        const newPost = {
+            id: Date.now(),
+            title,
+            body
+        }
+        const response = fetch(`https://jsonplaceholder.typicode.com/posts/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(newPost)
+        });
+        setDataPosts([newPost, ...dataPosts]);
+    }
+
+
+
+
     const deletePost = (id: number) => {
         const listItems = dataPosts.filter((post) => post.id !== id);
         const response = fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
@@ -51,9 +71,7 @@ function App() {
         <div className="App">
             <Modal>
                 <AddPost
-                    postCount={postCount}
-                    dataPosts={dataPosts}
-                    setDataPosts={setDataPosts}
+                    addNewPost={addNewPost}
                 />
             </Modal>
             <PostItem

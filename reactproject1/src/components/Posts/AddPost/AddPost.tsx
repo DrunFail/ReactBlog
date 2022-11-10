@@ -3,37 +3,19 @@ import './AddPost.css';
 
 
 interface AddPostProps {
-    dataPosts: any,
-    postCount: any,
-    setDataPosts: any,
+    addNewPost: (title: string, body: string) => void
 }
 
-export default function AddPost({ dataPosts, postCount, setDataPosts }: AddPostProps) {
+export default function AddPost({ addNewPost }: AddPostProps) {
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
-
-    function addPost(title:string, body: string) {
-        const newPost = {
-            id: +postCount + 1,
-            title,
-            body
-        }
-        const response = fetch(`https://jsonplaceholder.typicode.com/posts/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            body: JSON.stringify(newPost)
-        });
-        setDataPosts([newPost, ...dataPosts]);
-        setTitle('');
-        setBody('');
-    }
 
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        addPost(title, body);
+        addNewPost(title, body);
+        setTitle('');
+        setBody('');
     }
 
 
