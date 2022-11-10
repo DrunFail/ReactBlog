@@ -6,10 +6,9 @@ interface AddPostProps {
     dataPosts: any,
     postCount: any,
     setDataPosts: any,
-    setModalVisible: any
 }
 
-export default function AddPost({ dataPosts, postCount, setDataPosts, setModalVisible }: AddPostProps) {
+export default function AddPost({ dataPosts, postCount, setDataPosts }: AddPostProps) {
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
 
@@ -29,7 +28,6 @@ export default function AddPost({ dataPosts, postCount, setDataPosts, setModalVi
         setDataPosts([newPost, ...dataPosts]);
         setTitle('');
         setBody('');
-        setModalVisible(false);
     }
 
 

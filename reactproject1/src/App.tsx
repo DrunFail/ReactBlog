@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import AddPost from './components/Posts/AddPost/AddPost';
 import PostItem from './components/Posts/PostItem/PostItem';
 import Modal from './components/ui/modal/Modal';
 
@@ -48,10 +49,13 @@ function App() {
 
     return (
         <div className="App">
-            <Modal
-                postCount={postCount}
-                dataPosts={dataPosts}
-                setDataPosts={setDataPosts} />
+            <Modal>
+                <AddPost
+                    postCount={postCount}
+                    dataPosts={dataPosts}
+                    setDataPosts={setDataPosts}
+                />
+            </Modal>
             <PostItem
                 getCountPostOnPage={getCountPostOnPage }
                 searchResult={searchResult}
