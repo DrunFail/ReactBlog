@@ -1,23 +1,39 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Comments.css';
 
-export default function Comments({ post }) {
-    const [comments, setComments] = useState([])
+interface Comment {
+    body: string,
+    email: string,
+    id: number,
+    postId: number
+}
+
+
+interface CommentsProps {
+    postId: number
+}
+
+
+export default function Comments({ postId }: CommentsProps) {
+
+    const [comments, setComments] = useState<Comment[]>([])
     const [openComments, setOpenComments] = useState(false);
     const email = 'user@mail.ru';
     const [body, setBody] = useState('');
 
     useEffect(() => {
-        fetch(`https://jsonplaceholder.typicode.com/comments?postId=${post.id}`)
+        fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
             .then(response => response.json())
-            .then(commentss => setComments(commentss))
+            .then(commentsData => setComments(commentsData))
             .catch(error => console.log(error))
     }, [])
 
     const addComment = () => {
-        const newComment = {
+        const newComment: Comment = {
+            id: Date.now(),
             email,
-            body
+            body,
+            postId: postId
         }
         setComments([...comments, newComment])
         setBody('')

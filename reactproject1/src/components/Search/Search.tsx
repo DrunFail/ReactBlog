@@ -1,7 +1,14 @@
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Search.css';
 
-export default function Search({  dataPosts, setSearchResult }) {
+interface SearchProps {
+    dataPosts: any,
+    setSearchResult: any
+}
+
+
+
+export default function Search({  dataPosts, setSearchResult }: SearchProps) {
     const [search, setSearch] = useState('');
 
     useEffect(() => {

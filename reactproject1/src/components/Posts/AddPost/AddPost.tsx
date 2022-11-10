@@ -1,11 +1,19 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './AddPost.css';
 
-export default function AddPost({ dataPosts, postCount, setDataPosts, setModalVisible }) {
+
+interface AddPostProps {
+    dataPosts: any,
+    postCount: any,
+    setDataPosts: any,
+    setModalVisible: any
+}
+
+export default function AddPost({ dataPosts, postCount, setDataPosts, setModalVisible }: AddPostProps) {
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
 
-    function addPost(title, body) {
+    function addPost(title:string, body: string) {
         const newPost = {
             id: +postCount + 1,
             title,
@@ -25,7 +33,7 @@ export default function AddPost({ dataPosts, postCount, setDataPosts, setModalVi
     }
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         addPost(title, body);
     }

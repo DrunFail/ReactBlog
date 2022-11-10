@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import { useState, useEffect } from 'react';
 import PostItem from './components/Posts/PostItem/PostItem';
 import Modal from './components/ui/modal/Modal';
 
@@ -29,7 +29,12 @@ function App() {
         setPage(page + 1)
     }
 
-    const deletePost = (id) => {
+    const getCountPostOnPage = (count: number) => {
+        setLimit(count)
+    }
+
+
+    const deletePost = (id: number) => {
         const listItems = dataPosts.filter((post) => post.id !== id);
         const response = fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
             method: 'DELETE',
@@ -48,7 +53,7 @@ function App() {
                 dataPosts={dataPosts}
                 setDataPosts={setDataPosts} />
             <PostItem
-                setLimit={setLimit}
+                getCountPostOnPage={getCountPostOnPage }
                 searchResult={searchResult}
                 deletePost={deletePost}
                 dataPosts={dataPosts}

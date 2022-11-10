@@ -1,22 +1,28 @@
-import { useState } from 'react';
-import './EditPost.css';
+import React, { useState } from 'react';
 import editImg from '../../../assets/edit.png';
+import './EditPost.css';
 
 
-export default function EditPost({   post, dataPosts, setDataPosts   }) {
+interface EditPostProps {
+    post: any,
+    dataPosts: any,
+    setDataPosts: any
+}
+
+export default function EditPost({ post, dataPosts, setDataPosts   }: EditPostProps) {
     const [editTitle, setEditTitle] = useState('')
     const [editBody, setEditBody] = useState('')
     const [editModal, setEditModal] = useState(false)
 
     
-    const editPost = (id) => {
+    const editPost = (id: number): void => {
         setEditModal(true)
         const editItems = dataPosts.find((post) => post.id == id);
         setEditBody(editItems.body)
         setEditTitle(editItems.title)
         
     }
-    const handleEdit = (id) => {
+    const handleEdit = (id:number): void => {
         setEditModal(false)
         const editItem = { id, title: editTitle, body: editBody }
         console.log(id)

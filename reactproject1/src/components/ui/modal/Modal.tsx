@@ -1,11 +1,17 @@
-import {  useState } from 'react';
-import AddPostIcon from '../AddPostIcon';
-import AddPost from '../../Posts/AddPost/AddPost';
-import './Modal.css';
+import React, { useState } from 'react';
 import closeSvg from '../../../assets/close.svg';
+import AddPost from '../../Posts/AddPost/AddPost';
+import AddPostIcon from '../AddPostIcon';
+import './Modal.css';
+
+interface ModalProps {
+    dataPosts: any,
+    postCount: any,
+    setDataPosts: any
+}
 
 
-export default function Modal({ dataPosts, postCount, setDataPosts }) {
+export default function Modal({ dataPosts, postCount, setDataPosts }: ModalProps) {
     const [modalVisible, setModalVisible] = useState(false);
     return (
         <>
