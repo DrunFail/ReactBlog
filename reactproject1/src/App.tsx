@@ -4,6 +4,7 @@ import Pagination from './components/Pagination/Pagination';
 import AddPost from './components/Posts/AddPost/AddPost';
 import PostList from './components/Posts/PostList/PostList';
 import Search from './components/Search/Search';
+import { Post } from './components/types/types';
 import Modal from './components/ui/modal/Modal';
 
 export default function App() {

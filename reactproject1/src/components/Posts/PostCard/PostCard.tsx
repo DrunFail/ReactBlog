@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import deleteImg from '../../../assets/delete.png';
 import editImg from '../../../assets/edit.png';
-import Comments from '../../Comments/Comments';
+import CommentList from '../../Comments/CommentList/CommentLIst';
+import { Post } from '../../types/types';
 import EditPost from '../EditPost/EditPost';
 import './PostCard.css';
 
@@ -33,7 +34,7 @@ export default function PostCard({ post, deletePost, handleEdit }: PostCardProps
                         <img onClick={() => setEditOpen(!editOpen)} className='editImg' src={editImg} />
                     </div>
                     <div className='commentsContainer'>
-                        <Comments
+                        <CommentList
                             postId={post.id}
                         />
                     </div>

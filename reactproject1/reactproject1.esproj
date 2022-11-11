@@ -8,7 +8,9 @@
     <JavaScriptTestFramework>Jest</JavaScriptTestFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\components\Posts\types\" />
+    <Folder Include="src\components\Comments\CommentCard\" />
+    <Folder Include="src\components\Comments\AddComment\" />
+    <Folder Include="src\components\types\" />
     <Folder Include="src\components\Posts\PostCard\" />
     <Folder Include="src\components\Pagination\" />
   </ItemGroup>
