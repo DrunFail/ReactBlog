@@ -3,12 +3,13 @@ import './Search.css';
 
 interface SearchProps {
     dataPosts: any,
-    setSearchResult: any
+    setSearchResult: any,
+    setDataPosts: any
 }
 
 
 
-export default function Search({  dataPosts, setSearchResult }: SearchProps) {
+export default function Search({  dataPosts, setSearchResult,setDataPosts }: SearchProps) {
     const [search, setSearch] = useState('');
 
     useEffect(() => {

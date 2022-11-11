@@ -1,9 +1,8 @@
 import React from 'react';
-import deleteImg from '../../../assets/delete.png';
-import Comments from '../../Comments/Comments';
 import Search from '../../Search/Search';
-import EditPost from '../EditPost/EditPost';
 import './PostItem.css';
+import PostCard from '../PostCard/PostCard';
+
 
 
 interface PostItemProps {
@@ -12,15 +11,21 @@ interface PostItemProps {
     setSearchResult: any,
     searchResult: any,
     dataPosts: any,
-    setDataPosts: any
+    setDataPosts: any,
+    handleEdit: any
+    
 }
 
 
 
-export default function PostItem({ deletePost, getCountPostOnPage, setSearchResult, searchResult, dataPosts, setDataPosts }: PostItemProps) {
+export default function PostItem({ deletePost, handleEdit, getCountPostOnPage, setSearchResult, searchResult, dataPosts, setDataPosts }: PostItemProps) {
     const options = [{ value: 10, label: 10 },
-                     { value: 20, label: 20 },
-                     { value: 100, label: 'все' }]
+    { value: 20, label: 20 },
+    { value: 100, label: 'все' }]
+
+
+
+
 
     return (
         <>
@@ -29,29 +34,36 @@ export default function PostItem({ deletePost, getCountPostOnPage, setSearchResu
                 <Search
                     dataPosts={dataPosts}
                     setSearchResult={setSearchResult}
+                    setDataPosts={setDataPosts }
                 />
             </div>
             <div>
                 <p>show posts:</p>
                 <p><select onChange={(e) => getCountPostOnPage(+e.target.value)}>
-                    {options.map((option) => <option value={option.value } key={option.value}>{option.label}</option>)}
+                    {options.map((option) =>
+                        <option
+                            value={option.value}
+                            key={option.value}>
+                            {option.label}
+                        </option>)}
                 </select></p>
-                </div>
+            </div>
+            <div className='postsList'>
+
+            
             {!searchResult.length ? <p>no posts</p>
-                : searchResult.map((post) =>
-                    <article className="post-item" key={post.id}>
-                        <h1 className='title'>{post.title}</h1>
-                        <p className='body'>{post.body}</p>
-                        <Comments
-                            postId={post.id}
-                        />
-                        <img onClick={() => deletePost(post.id)} className='deleteImg' src={deleteImg} />
-                        <EditPost
-                            post={post}
-                            dataPosts={dataPosts}
-                            setDataPosts={setDataPosts}
-                        />
-                    </article>)}
+                : searchResult.map(post =>
+                    <PostCard
+                        key={post.id}
+                        deletePost={deletePost}
+                        post={post}
+                        handleEdit={handleEdit }
+                    />)
+                }
+
+            </div>
+
+                    
         </>
     );
 }

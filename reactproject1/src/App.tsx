@@ -9,6 +9,7 @@ function App() {
     const [searchResult, setSearchResult] = useState([]);
     const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(10)
+
     const [postCount, setPostCount] = useState(null)
     const pageCount = Math.ceil(postCount / limit)
     const pagesArray = Array(pageCount).fill().map((_, index) => index + 1)
@@ -67,6 +68,23 @@ function App() {
         setDataPosts(listItems);
     }
 
+    const checkPost = (id: number) => {
+        const x = dataPosts.find(post => post.id === id)
+    }
+
+
+    const handleEdit = (postId: number, editedItem: any) => {
+        const response = fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(editedItem)
+        });
+        setDataPosts(dataPosts.map((post) => post.id === postId ? { ...editedItem } : post))
+
+    }
+
     return (
         <div className="App">
             <Modal>
@@ -75,7 +93,8 @@ function App() {
                 />
             </Modal>
             <PostItem
-                getCountPostOnPage={getCountPostOnPage }
+                handleEdit={handleEdit }
+                getCountPostOnPage={getCountPostOnPage}
                 searchResult={searchResult}
                 deletePost={deletePost}
                 dataPosts={dataPosts}

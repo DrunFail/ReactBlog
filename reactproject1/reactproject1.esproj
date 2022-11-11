@@ -9,5 +9,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\components\Posts\types\" />
+    <Folder Include="src\components\Posts\PostCard\" />
   </ItemGroup>
 </Project>
