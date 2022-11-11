@@ -1,6 +1,5 @@
 import React from 'react';
-import Search from '../../Search/Search';
-import './PostItem.css';
+import './PostList.css';
 import PostCard from '../PostCard/PostCard';
 
 
@@ -8,17 +7,13 @@ import PostCard from '../PostCard/PostCard';
 interface PostItemProps {
     deletePost: (id: number) => void,
     getCountPostOnPage: (count: number) => void,
-    setSearchResult: any,
-    searchResult: any,
-    dataPosts: any,
-    setDataPosts: any,
-    handleEdit: any
-    
+    dataPosts: Post[],
+    handleEdit: (postId: number, editedItem: Post) => void
 }
 
 
 
-export default function PostItem({ deletePost, handleEdit, getCountPostOnPage, setSearchResult, searchResult, dataPosts, setDataPosts }: PostItemProps) {
+export default function PostItem({ deletePost, handleEdit, getCountPostOnPage, dataPosts }: PostItemProps) {
     const options = [{ value: 10, label: 10 },
     { value: 20, label: 20 },
     { value: 100, label: 'все' }]
@@ -31,11 +26,6 @@ export default function PostItem({ deletePost, handleEdit, getCountPostOnPage, s
         <>
             <div className='post-container'>
                 <h1>список постов</h1>
-                <Search
-                    dataPosts={dataPosts}
-                    setSearchResult={setSearchResult}
-                    setDataPosts={setDataPosts }
-                />
             </div>
             <div>
                 <p>show posts:</p>
@@ -51,8 +41,8 @@ export default function PostItem({ deletePost, handleEdit, getCountPostOnPage, s
             <div className='postsList'>
 
             
-            {!searchResult.length ? <p>no posts</p>
-                : searchResult.map(post =>
+            {!dataPosts.length ? <p>no posts</p>
+                : dataPosts.map(post =>
                     <PostCard
                         key={post.id}
                         deletePost={deletePost}

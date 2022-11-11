@@ -1,34 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import AddPost from './components/Posts/AddPost/AddPost';
-import PostItem from './components/Posts/PostItem/PostItem';
+import PostList from './components/Posts/PostList/PostList';
+import Search from './components/Search/Search';
 import Modal from './components/ui/modal/Modal';
 
 function App() {
     const [dataPosts, setDataPosts] = useState<Post[]>([]);
-    const [searchResult, setSearchResult] = useState([]);
-    const [page, setPage] = useState(1)
+    const [selectedPage, setSelectedPage] = useState(1)
     const [limit, setLimit] = useState(10)
 
-    const [postCount, setPostCount] = useState(null)
+    const [postCount, setPostCount] = useState(0)
     const pageCount = Math.ceil(postCount / limit)
     const pagesArray = Array(pageCount).fill().map((_, index) => index + 1)
 
-    useEffect(() => {
-        fetch(`https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit} `)
+    const getPosts = () => {
+        fetch(`https://jsonplaceholder.typicode.com/posts?_page=${selectedPage}&_limit=${limit} `)
             .then(response => {
                 setPostCount(response.headers.get('X-Total-Count'));
                 return response.json();
             })
             .then(posts => setDataPosts(posts))
             .catch(error => console.log(error))
-    }, [page, limit])
+    }
+
+
+
+    useEffect(() => {
+       getPosts()
+    }, [selectedPage, limit])
 
     function prevPage() {
-        setPage(page - 1)
+        setSelectedPage(selectedPage - 1)
     }
     function nextPage() {
-        setPage(page + 1)
+        setSelectedPage(selectedPage + 1)
     }
 
     const getCountPostOnPage = (count: number) => {
@@ -36,14 +42,14 @@ function App() {
     }
 
 
-    function addNewPost(title: string, body: string) {
+   async function addNewPost(title: string, body: string) {
 
         const newPost = {
             id: Date.now(),
             title,
             body
         }
-        const response = fetch(`https://jsonplaceholder.typicode.com/posts/`, {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/posts/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
@@ -56,9 +62,9 @@ function App() {
 
 
 
-    const deletePost = (id: number) => {
+    const deletePost = async (id: number) => {
         const listItems = dataPosts.filter((post) => post.id !== id);
-        const response = fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
@@ -68,13 +74,10 @@ function App() {
         setDataPosts(listItems);
     }
 
-    const checkPost = (id: number) => {
-        const x = dataPosts.find(post => post.id === id)
-    }
 
 
-    const handleEdit = (postId: number, editedItem: any) => {
-        const response = fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
+    const handleEdit = async (postId: number, editedItem: Post) => {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
@@ -92,19 +95,22 @@ function App() {
                     addNewPost={addNewPost}
                 />
             </Modal>
-            <PostItem
+
+            <Search
+                getPosts={getPosts}
+                setDataPosts={setDataPosts} />
+
+            <PostList
                 handleEdit={handleEdit }
                 getCountPostOnPage={getCountPostOnPage}
-                searchResult={searchResult}
                 deletePost={deletePost}
                 dataPosts={dataPosts}
-                setDataPosts={setDataPosts}
-                setSearchResult={setSearchResult}
             />
+
             <div className="button-container">
                 <button
                     onClick={prevPage}
-                    disabled={page === 1}
+                    disabled={selectedPage === 1}
                 >
                     prev
                 </button>
@@ -114,7 +120,12 @@ function App() {
                 >
                     next
                 </button>
-                {pagesArray.map((el) => <button key={el} onClick={() => setPage(el)}>{el}</button>)}
+                {pagesArray.map(page =>
+                    <button
+                        key={page}
+                        onClick={() => setSelectedPage(page)}>
+                        {page}
+                    </button>)}
             </div>
         </div>
 

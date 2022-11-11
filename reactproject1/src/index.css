@@ -18,4 +18,6 @@ code {
 #root {
     display: flex;
     flex-direction: column;
+    max-width: 980px;
+    margin: 0 auto;
 }

@@ -2,22 +2,29 @@ import React, { useEffect, useState } from 'react';
 import './Search.css';
 
 interface SearchProps {
-    dataPosts: any,
-    setSearchResult: any,
-    setDataPosts: any
+    setDataPosts: any,
+    getPosts: any
 }
 
 
 
-export default function Search({  dataPosts, setSearchResult,setDataPosts }: SearchProps) {
+export default function Search({ getPosts, setDataPosts }: SearchProps) {
     const [search, setSearch] = useState('');
 
+    const querySearch = `q=${search}`
+    
+
     useEffect(() => {
-        !search ? setSearchResult(dataPosts)
-            : fetch(`https://jsonplaceholder.typicode.com/posts?q=${search}`)
-            .then(response => response.json())
-            .then(searched => setSearchResult(searched))
-    }, [search, dataPosts])
+        if (search !== '') {
+            fetch(`https://jsonplaceholder.typicode.com/posts?${querySearch}`)
+                .then(response => response.json())
+                .then(searched => setDataPosts(searched))
+        } else {
+            getPosts()
+        }
+         
+             
+    }, [search])
 
     
 
