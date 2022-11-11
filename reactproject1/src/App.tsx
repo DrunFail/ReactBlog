@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import Pagination from './components/Pagination/Pagination';
 import AddPost from './components/Posts/AddPost/AddPost';
 import PostList from './components/Posts/PostList/PostList';
 import Search from './components/Search/Search';
 import Modal from './components/ui/modal/Modal';
 
-function App() {
+export default function App() {
     const [dataPosts, setDataPosts] = useState<Post[]>([]);
     const [selectedPage, setSelectedPage] = useState(1)
-    const [limit, setLimit] = useState(10)
+    const [limitPostOnPage, setLimitPostOnPage] = useState(10)
 
     const [postCount, setPostCount] = useState(0)
-    const pageCount = Math.ceil(postCount / limit)
-    const pagesArray = Array(pageCount).fill().map((_, index) => index + 1)
 
     const getPosts = () => {
-        fetch(`https://jsonplaceholder.typicode.com/posts?_page=${selectedPage}&_limit=${limit} `)
+        fetch(`https://jsonplaceholder.typicode.com/posts?_page=${selectedPage}&_limit=${limitPostOnPage} `)
             .then(response => {
                 setPostCount(response.headers.get('X-Total-Count'));
                 return response.json();
@@ -28,17 +27,15 @@ function App() {
 
     useEffect(() => {
        getPosts()
-    }, [selectedPage, limit])
+    }, [selectedPage, limitPostOnPage])
 
-    function prevPage() {
-        setSelectedPage(selectedPage - 1)
-    }
-    function nextPage() {
-        setSelectedPage(selectedPage + 1)
-    }
+
+    const onPage = (numberPage: number) =>
+        setSelectedPage(numberPage)
+    
 
     const getCountPostOnPage = (count: number) => {
-        setLimit(count)
+        setLimitPostOnPage(count)
     }
 
 
@@ -106,31 +103,17 @@ function App() {
                 deletePost={deletePost}
                 dataPosts={dataPosts}
             />
+            <Pagination
+                limitPostOnPage={limitPostOnPage}
+                postCount={postCount}
+                selectedPage={selectedPage}
+                onPage={onPage }
+            />
 
-            <div className="button-container">
-                <button
-                    onClick={prevPage}
-                    disabled={selectedPage === 1}
-                >
-                    prev
-                </button>
-                <button
-                    onClick={nextPage}
-                    disabled={!dataPosts.length}
-                >
-                    next
-                </button>
-                {pagesArray.map(page =>
-                    <button
-                        key={page}
-                        onClick={() => setSelectedPage(page)}>
-                        {page}
-                    </button>)}
-            </div>
         </div>
 
     );
 }
 
-export default App;
+
 

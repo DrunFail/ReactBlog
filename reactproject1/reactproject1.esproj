@@ -10,5 +10,6 @@
   <ItemGroup>
     <Folder Include="src\components\Posts\types\" />
     <Folder Include="src\components\Posts\PostCard\" />
+    <Folder Include="src\components\Pagination\" />
   </ItemGroup>
 </Project>
