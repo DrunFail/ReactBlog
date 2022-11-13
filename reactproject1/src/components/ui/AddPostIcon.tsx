@@ -1,12 +1,15 @@
 import React from 'react';
 import addPos from '../../assets/addPost.png';
-import './AddPostIcon.css';
+import styles from './AddPostIcon.module.scss';
 
 
 export default function AddPostIcon() {
     return (
         <>
-            <img className="addPostImg" src={addPos} />
+            <img
+                className={styles.addPost }
+                src={addPos}
+                alt="add post" />
         </>
     );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
+import styles from './App.module.scss';
 import Pagination from './components/Pagination/Pagination';
 import AddPost from './components/Posts/AddPost/AddPost';
 import PostList from './components/Posts/PostList/PostList';
@@ -17,7 +17,7 @@ export default function App() {
     const getPosts = () => {
         fetch(`https://jsonplaceholder.typicode.com/posts?_page=${selectedPage}&_limit=${limitPostOnPage} `)
             .then(response => {
-                setPostCount(response.headers.get('X-Total-Count'));
+                setPostCount(Number(response.headers.get('X-Total-Count')));
                 return response.json();
             })
             .then(posts => setDataPosts(posts))
@@ -87,7 +87,7 @@ export default function App() {
     }
 
     return (
-        <div className="App">
+        <div className={styles.App}>
             <Modal>
                 <AddPost
                     addNewPost={addNewPost}

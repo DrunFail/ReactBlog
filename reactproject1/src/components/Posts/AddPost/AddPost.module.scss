@@ -1,0 +1,50 @@
+.form {
+    display: grid;
+    grid-auto-rows: 1fr 2fr 11fr 2fr;
+    grid-row-gap: 2rem;
+    min-width: 20rem;
+    height: 30rem;
+    
+
+    & > h1 {
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    & .addTitle, .addBody {
+        display: grid;
+
+        & label {
+            font-weight: 600;
+        }
+
+        & input, textarea {
+            padding: 0.3rem 1rem;
+            border-radius: 0.5rem;
+        }
+    }
+
+    & .addTitle {
+        grid-auto-rows: 1fr 5fr;
+
+        & input {
+            align-self: center;
+            height: 2rem;
+        }
+    }
+
+    & .addBody {
+        grid-auto-rows: 1fr 7fr;
+
+        & textarea {
+            resize: none;
+            height: 100%;
+        }
+    }
+
+    & button {
+        justify-self: center;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+    }
+}

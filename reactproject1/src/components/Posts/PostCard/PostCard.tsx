@@ -4,7 +4,7 @@ import editImg from '../../../assets/edit.png';
 import CommentList from '../../Comments/CommentList/CommentLIst';
 import { Post } from '../../types/types';
 import EditPost from '../EditPost/EditPost';
-import './PostCard.css';
+import styles from './PostCard.module.scss';
 
 
 interface PostCardProps {
@@ -22,18 +22,23 @@ export default function PostCard({ post, deletePost, handleEdit }: PostCardProps
     }
 
     return (
-        <article className="post-item" key={post.id}>
+        <article
+            className={styles.container}
+            key={post.id}>
             {!editOpen &&
-
                 <>
-                    <h1 className='title'>{post.title}</h1>
-                    <p className='body'>{post.body}</p>
+                    <h1 className={styles.postTitle}>{post.title}</h1>
+                    <p className={styles.postBody}>{post.body}</p>
 
-                    <div className='groupButton'>
-                        <img onClick={() => deletePost(post.id)} className='deleteImg' src={deleteImg} />
-                        <img onClick={() => setEditOpen(!editOpen)} className='editImg' src={editImg} />
+                    <div className={styles.buttons}>
+                        <img
+                            onClick={() => deletePost(post.id)}
+                            src={deleteImg} />
+                        <img
+                            onClick={() => setEditOpen(!editOpen)}
+                            src={editImg} />
                     </div>
-                    <div className='commentsContainer'>
+                    <div className={styles.comments}>
                         <CommentList
                             postId={post.id}
                         />
@@ -46,7 +51,7 @@ export default function PostCard({ post, deletePost, handleEdit }: PostCardProps
                     <EditPost
                         handleEdit={handleEdit}
                         post={post}
-                        closeEditForm={closeEditForm }
+                        closeEditForm={closeEditForm}
                     />
                 </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AddPost.css';
+import styles from './AddPost.module.scss';
 
 
 interface AddPostProps {
@@ -11,7 +11,7 @@ export default function AddPost({ addNewPost }: AddPostProps) {
     const [body, setBody] = useState('')
 
 
-    const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         addNewPost(title, body);
         setTitle('');
@@ -20,24 +20,30 @@ export default function AddPost({ addNewPost }: AddPostProps) {
 
 
     return (
-        <form className='addPost' onSubmit={handleSubmit}>
-            <h1 className='head'>добавить пост</h1>
-            <label htmlFor='addTitle' />
-            <input
-                className='addPostInput'
-                autoComplete="off"
-                id='addTitle'
-                onChange={(e) => setTitle(e.target.value)}
-                value={title}
-                placeholder="Название"
-                required />
-            <label htmlFor='addBody' />
-            <textarea
-                id='addBody'
-                onChange={(e) => setBody(e.target.value)}
-                value={body}
-                placeholder="Тело сообщения"
-                required />
+        <form className={styles.form} onSubmit={handleSubmit}>
+            <h1>добавить пост</h1>
+            <div className={styles.addTitle}>
+                <label htmlFor='addTitle' >Название</label>
+                <input
+                    className='addPostInput'
+                    autoComplete="off"
+                    id='addTitle'
+                    onChange={(e) => setTitle(e.target.value)}
+                    value={title}
+                    placeholder="Название"
+                    required />
+
+            </div>
+            <div className={styles.addBody}>
+                <label htmlFor='addBody'>Тело сообщения</label>
+                <textarea
+                    id='addBody'
+                    onChange={(e) => setBody(e.target.value)}
+                    value={body}
+                    placeholder="Тело сообщения"
+                    required />
+
+            </div>
             <button className='submit-add'>отправить</button>
         </form>
     );

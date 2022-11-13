@@ -1,0 +1,17 @@
+.container{
+    display: grid;
+    grid-row-gap: 1rem;
+
+    & > h1{
+        text-transform: uppercase;
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: center;
+        color: white;
+    }
+
+    & .postList{
+        display: grid;
+        grid-row-gap: 1rem;
+    }
+}

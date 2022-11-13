@@ -1,0 +1,13 @@
+.container {
+    display: grid;
+    grid-row-gap: 1rem;
+
+    & a {
+        text-align: center;
+
+        & span {
+            text-decoration: underline;
+            text-transform: capitalize;
+        }
+    }
+}

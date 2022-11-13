@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Comment } from "../../types/types";
 import AddComment from "../AddComment/AddComment";
 import CommentCard from "../CommentCard/CommentCard";
-import './CommentList.css';
+import styles from './CommentList.module.scss';
 
 
 interface CommentsProps {
@@ -26,12 +26,11 @@ export default function CommentList({ postId }: CommentsProps) {
     }
 
     return (
-        <div className='comment'>
-            <div className='container-comm'>
+        <div className={styles.container }>
                 <a
                     className={openComments ? 'show-comm' : 'noshow-comm'}
                     onClick={() => setOpenComments(!openComments)}>
-                    комментарии {comments.length}
+                <span>комментарии </span>({comments.length})
                 </a>
                 {openComments &&
                     <>
@@ -47,6 +46,5 @@ export default function CommentList({ postId }: CommentsProps) {
                     </>
                 }
             </div>
-        </div>
     );
 }

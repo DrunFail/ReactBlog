@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Pagination.module.scss';
 
 interface PaginationProps {
     selectedPage: number,
@@ -15,28 +16,32 @@ export default function Pagination({ selectedPage,
 
     const pageCount = Math.ceil(postCount / limitPostOnPage)
 
-    const pagesArray = Array(pageCount).fill().map((_, index) => index + 1)
+    const pagesArray = Array.from({ length: pageCount }, (_, i) => i + 1)
 
     return (
-        <div className="button-container">
+        <div className={styles.container}>
             <button
                 onClick={() => onPage(selectedPage - 1)}
                 disabled={selectedPage === 1}
             >
-                prev
+                Пред.
             </button>
 
-            {pagesArray.map(page =>
+            {pagesArray.map(page => {
+                const aria = (selectedPage === page) ? "page" : undefined
+                    return(
                 <button
-                    key={page}
-                    onClick={() => onPage(page)}>
+                            key={page}
+                            onClick={() => onPage(page)}
+                            aria-current={aria }>
                     {page}
-                </button>)}
+                </button>
+            )})}
             <button
                 onClick={() => onPage(selectedPage + 1)}
                 disabled={selectedPage === pageCount}
             >
-                next
+                След.
             </button>
         </div>
 

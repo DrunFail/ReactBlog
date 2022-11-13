@@ -1,11 +1,11 @@
 import React from 'react';
-import './PostList.css';
+import styles from './PostList.module.scss';
 import PostCard from '../PostCard/PostCard';
 import { Post } from '../../types/types';
 
 
 
-interface PostItemProps {
+interface PostListProps {
     deletePost: (id: number) => void,
     getCountPostOnPage: (count: number) => void,
     dataPosts: Post[],
@@ -14,7 +14,7 @@ interface PostItemProps {
 
 
 
-export default function PostItem({ deletePost, handleEdit, getCountPostOnPage, dataPosts }: PostItemProps) {
+export default function PostList({ deletePost, handleEdit, getCountPostOnPage, dataPosts }: PostListProps) {
     const options = [{ value: 10, label: 10 },
     { value: 20, label: 20 },
     { value: 100, label: 'все' }]
@@ -24,10 +24,8 @@ export default function PostItem({ deletePost, handleEdit, getCountPostOnPage, d
 
 
     return (
-        <>
-            <div className='post-container'>
+        <div className={styles.container }>
                 <h1>список постов</h1>
-            </div>
             <div>
                 <p>show posts:</p>
                 <p><select onChange={(e) => getCountPostOnPage(+e.target.value)}>
@@ -39,7 +37,7 @@ export default function PostItem({ deletePost, handleEdit, getCountPostOnPage, d
                         </option>)}
                 </select></p>
             </div>
-            <div className='postsList'>
+            <div className={styles.postList}>
 
             
             {!dataPosts.length ? <p>no posts</p>
@@ -55,6 +53,6 @@ export default function PostItem({ deletePost, handleEdit, getCountPostOnPage, d
             </div>
 
                     
-        </>
+        </div>
     );
 }

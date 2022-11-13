@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Comment } from '../../types/types';
+import styles from './AddComment.module.scss';
 
 interface AddCommentProps {
     addComment: (newComment: Comment) => void,
@@ -18,10 +19,11 @@ export default function AddComment({ addComment, postId }: AddCommentProps) {
     }
 
     return (
-        <div className='show-add'>
+        <div className={styles.container }>
             <textarea
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
+                placeholder="Написать комментарий"
             />
             <button
                 onClick={() => {
