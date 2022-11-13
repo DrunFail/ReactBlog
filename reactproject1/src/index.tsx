@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import About from './pages/About';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
+import Layout from './components/Layout/Layout';
 import NoMatch from './components/NoMatch/NoMatch';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
