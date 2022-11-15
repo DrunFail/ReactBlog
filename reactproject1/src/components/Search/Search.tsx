@@ -17,8 +17,14 @@ export default function Search({ getPosts, setDataPosts }: SearchProps) {
     useEffect(() => {
         if (search !== '') {
             fetch(`https://jsonplaceholder.typicode.com/posts?${querySearch}`)
-                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw response
+                })
                 .then(searched => setDataPosts(searched))
+                .catch(error => console.error("Error fetching data: ", error))
         } else {
             getPosts()
         }

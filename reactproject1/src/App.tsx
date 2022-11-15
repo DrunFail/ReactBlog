@@ -17,30 +17,37 @@ export default function App() {
     const getPosts = () => {
         fetch(`https://jsonplaceholder.typicode.com/posts?_page=${selectedPage}&_limit=${limitPostOnPage} `)
             .then(response => {
-                setPostCount(Number(response.headers.get('X-Total-Count')));
-                return response.json();
+                if (response.ok) {
+                    setPostCount(Number(response.headers.get('X-Total-Count')));
+                    return response.json();
+                }
+                throw response
+
             })
             .then(posts => setDataPosts(posts))
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+            })
+
     }
 
 
 
     useEffect(() => {
-       getPosts()
+        getPosts()
     }, [selectedPage, limitPostOnPage])
 
 
     const onPage = (numberPage: number) =>
         setSelectedPage(numberPage)
-    
+
 
     const getCountPostOnPage = (count: number) => {
         setLimitPostOnPage(count)
     }
 
 
-   async function addNewPost(title: string, body: string) {
+    async function addNewPost(title: string, body: string) {
 
         const newPost = {
             id: Date.now(),
@@ -54,6 +61,10 @@ export default function App() {
             },
             body: JSON.stringify(newPost)
         });
+        if (!response.ok) {
+            const message = `Error has occured: ${response.status}`;
+            throw new Error(message)
+        }
         setDataPosts([newPost, ...dataPosts]);
     }
 
@@ -69,6 +80,10 @@ export default function App() {
             },
             body: JSON.stringify(listItems)
         });
+        if (!response.ok) {
+            const message = `Error has occured: ${response.status}`
+            throw new Error(message)
+        }
         setDataPosts(listItems);
     }
 
@@ -82,6 +97,10 @@ export default function App() {
             },
             body: JSON.stringify(editedItem)
         });
+        if (!response.ok) {
+            const message = `Error has occured: ${response.status}`
+            throw new Error(message)
+        }
         setDataPosts(dataPosts.map((post) => post.id === postId ? { ...editedItem } : post))
 
     }
@@ -99,7 +118,7 @@ export default function App() {
                 setDataPosts={setDataPosts} />
 
             <PostList
-                handleEdit={handleEdit }
+                handleEdit={handleEdit}
                 getCountPostOnPage={getCountPostOnPage}
                 deletePost={deletePost}
                 dataPosts={dataPosts}
@@ -108,7 +127,7 @@ export default function App() {
                 limitPostOnPage={limitPostOnPage}
                 postCount={postCount}
                 selectedPage={selectedPage}
-                onPage={onPage }
+                onPage={onPage}
             />
 
         </div>

@@ -10,6 +10,14 @@ interface ModalProps {
 
 export default function Modal({ children }: ModalProps) {
     const [modalVisible, setModalVisible] = useState(false);
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Escape') {
+            setModalVisible(false)
+        }
+    }
+
+
     return (
         <>
             <div onClick={() => setModalVisible(true)}>
@@ -17,8 +25,10 @@ export default function Modal({ children }: ModalProps) {
             </div>
             {modalVisible &&
 
-                <div className={styles.showModal }>
-                    <div className={styles.contentModal }>
+                <div className={styles.showModal}
+                    tabIndex={0}
+                    onKeyDown={handleKeyDown}>
+                    <div className={styles.contentModal}>
                         <button
                             className={styles.closeModal }
                             onClick={() => setModalVisible(false)}>
