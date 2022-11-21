@@ -6,10 +6,10 @@ import { Post } from '../../types/types';
 
 
 interface PostListProps {
-    deletePost: (id: number) => void,
+    deletePost: (id: number) => Promise<void>,
     getCountPostOnPage: (count: number) => void,
     dataPosts: Post[],
-    handleEdit: (postId: number, editedItem: Post) => void
+    handleEdit: (postId: number, editedItem: Post) => Promise<void>
 }
 
 

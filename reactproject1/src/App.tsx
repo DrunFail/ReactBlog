@@ -14,40 +14,47 @@ export default function App() {
 
     const [postCount, setPostCount] = useState(0)
 
-    const getPosts = () => {
-        fetch(`https://jsonplaceholder.typicode.com/posts?_page=${selectedPage}&_limit=${limitPostOnPage} `)
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const getPosts = (): void => {
+        fetch(`https://jsonplaceholder.typicode.com/posts?_page=${selectedPage}&_limit=${limitPostOnPage} `, {signal})
             .then(response => {
                 if (response.ok) {
                     setPostCount(Number(response.headers.get('X-Total-Count')));
                     return response.json();
                 }
                 throw response
-
             })
             .then(posts => setDataPosts(posts))
             .catch(error => {
-                console.error("Error fetching data: ", error);
+                if (error.name === 'AbortError') {
+                    console.log('cancelled')
+                } else {
+                    console.error("Error fetching data: ", error)
+                }
             })
-
     }
 
-
-
     useEffect(() => {
-        getPosts()
-    }, [selectedPage, limitPostOnPage])
+        getPosts();
+
+        return () => {
+            controller.abort();
+        };
+    }, [selectedPage, limitPostOnPage]);
 
 
-    const onPage = (numberPage: number) =>
+    const onPage = (numberPage: number): void =>
         setSelectedPage(numberPage)
 
 
-    const getCountPostOnPage = (count: number) => {
+    const getCountPostOnPage = (count: number): void => {
         setLimitPostOnPage(count)
     }
 
 
-    async function addNewPost(title: string, body: string) {
+    async function addNewPost(title: string, body: string): Promise<void> {
 
         const newPost = {
             id: Date.now(),
@@ -71,7 +78,7 @@ export default function App() {
 
 
 
-    const deletePost = async (id: number) => {
+    const deletePost = async (id: number): Promise<void> => {
         const listItems = dataPosts.filter((post) => post.id !== id);
         const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
             method: 'DELETE',
@@ -89,7 +96,7 @@ export default function App() {
 
 
 
-    const handleEdit = async (postId: number, editedItem: Post) => {
+    const handleEdit = async (postId: number, editedItem: Post): Promise<void> => {
         const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
             method: 'PUT',
             headers: {
