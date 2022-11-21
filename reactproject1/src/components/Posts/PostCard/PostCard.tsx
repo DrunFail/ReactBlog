@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import deleteImg from '../../../assets/delete.png';
 import editImg from '../../../assets/edit.png';
 import CommentList from '../../Comments/CommentList/CommentLIst';
-import { Post } from '../../types/types';
+import { Post } from '../../interfaces/interfaces';
 import EditPost from '../EditPost/EditPost';
 import styles from './PostCard.module.scss';
 
 
 interface PostCardProps {
     post: Post,
-    deletePost: (id: number) => void,
-    handleEdit: (postId: number, editedItem: Post) => void
+    deletePost: (id: number) => Promise<void>,
+    handleEdit: (postId: number, editedItem: Post) => Promise<void>
 }
 
 

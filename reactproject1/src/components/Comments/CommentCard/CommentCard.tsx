@@ -1,5 +1,5 @@
 import React from 'react';
-import { Comment } from '../../types/types';
+import { Comment } from '../../interfaces/interfaces';
 import styles from './CommentCard.module.scss';
 
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Comment } from "../../types/types";
+import { Comment } from "../../interfaces/interfaces";
 import AddComment from "../AddComment/AddComment";
 import CommentCard from "../CommentCard/CommentCard";
 import styles from './CommentList.module.scss';

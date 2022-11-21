@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Comment } from '../../types/types';
+import { Comment } from '../../interfaces/interfaces';
 import styles from './AddComment.module.scss';
 
 interface AddCommentProps {

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './PostList.module.scss';
 import PostCard from '../PostCard/PostCard';
-import { Post } from '../../types/types';
+import { Post } from '../../interfaces/interfaces';
 
 
 

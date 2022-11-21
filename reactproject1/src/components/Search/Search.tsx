@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import './Search.css';
+import styles from  './Search.module.scss';
 
 interface SearchProps {
     setDataPosts: any,
-    getPosts: any
+    getPosts: () => void
 }
 
 
@@ -15,7 +15,7 @@ export default function Search({ getPosts, setDataPosts }: SearchProps) {
     
 
     useEffect(() => {
-        if (search !== '') {
+        if (search) {
             fetch(`https://jsonplaceholder.typicode.com/posts?${querySearch}`)
                 .then(response => {
                     if (response.ok) {
@@ -36,7 +36,7 @@ export default function Search({ getPosts, setDataPosts }: SearchProps) {
 
     return (
         < >
-            <input className='search'
+            <input className={styles.search }
                 type="search"
                 placeholder="поиск..."
                 value={search}

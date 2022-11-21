@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Post } from '../../types/types';
-import './EditPost.css';
+import { Post } from '../../interfaces/interfaces';
+import styles from './EditPost.module.scss';
 
 
 interface EditPostProps {
     post: Post,
-    handleEdit: (postId: number, editedItem: Post) => void,
+    handleEdit: (postId: number, editedItem: Post) => Promise<void>,
     closeEditForm: () => void
 }
 
@@ -17,20 +17,23 @@ export default function EditPost({ post, handleEdit,closeEditForm }: EditPostPro
     
     return (
         <>
-            <form  className='editForm'   onSubmit={(e) => e.preventDefault()}>
+            <form
+                className={styles.editForm}
+                onSubmit={(e) => e.preventDefault()}
+            >
                 <h1>форма редактирования</h1>
-                <input className='edit-title'
+                <input className={styles.editTitle }
                     value={editTitle}
                     onChange={(e) => setEditTitle(e.target.value)}
                     placeholder="edit title"
                 />
-                <textarea className='edit-body'
+                <textarea className={styles.editBody }
                     value={editBody}
                     onChange={(e) => setEditBody(e.target.value)}
                     placeholder="edit body"
                 />
                 <button
-                    className='button'
+                    className={styles.button }
                     onClick={() => {
                         handleEdit(post.id, editedItem);
                         closeEditForm()
