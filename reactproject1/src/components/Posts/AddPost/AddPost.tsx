@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
+import store from '../../../store';
 import styles from './AddPost.module.scss';
 
 
 interface AddPostProps {
-    addNewPost: (title: string, body: string) => void
 }
 
-export default function AddPost({ addNewPost }: AddPostProps) {
+export default function AddPost({  }: AddPostProps) {
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
 
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        addNewPost(title, body);
+        store.addPost(title, body);
         setTitle('');
         setBody('');
     }

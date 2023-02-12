@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
+import store from '../../../store';
 import { Post } from '../../interfaces/interfaces';
 import styles from './EditPost.module.scss';
 
 
 interface EditPostProps {
     post: Post,
-    handleEdit: (postId: number, editedItem: Post) => Promise<void>,
     closeEditForm: () => void
 }
 
-export default function EditPost({ post, handleEdit,closeEditForm }: EditPostProps) {
+export default function EditPost({ post, closeEditForm}: EditPostProps) {
     const [editTitle, setEditTitle] = useState(post.title)
     const [editBody, setEditBody] = useState(post.body)
         
@@ -19,7 +19,12 @@ export default function EditPost({ post, handleEdit,closeEditForm }: EditPostPro
         <>
             <form
                 className={styles.editForm}
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    store.editPost(editedItem)
+                    closeEditForm()
+                }
+                }
             >
                 <h1>форма редактирования</h1>
                 <input className={styles.editTitle }
@@ -33,12 +38,8 @@ export default function EditPost({ post, handleEdit,closeEditForm }: EditPostPro
                     placeholder="edit body"
                 />
                 <button
-                    className={styles.button }
-                    onClick={() => {
-                        handleEdit(post.id, editedItem);
-                        closeEditForm()
-                    }
-                    }>Сохранить</button>
+                    className={styles.button }>
+                    Сохранить</button>
             </form>
         </>
     );

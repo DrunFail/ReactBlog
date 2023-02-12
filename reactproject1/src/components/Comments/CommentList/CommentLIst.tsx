@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import { Comment } from "../../interfaces/interfaces";
 import AddComment from "../AddComment/AddComment";
@@ -10,15 +11,14 @@ interface CommentsProps {
 }
 
 
-export default function CommentList({ postId }: CommentsProps) {
+const CommentList = observer(({ postId }: CommentsProps) => {
     const [comments, setComments] = useState<Comment[]>([])
     const [openComments, setOpenComments] = useState(false);
 
     useEffect(() => {
         fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
             .then(response => response.json())
-            .then(commentsData => setComments(commentsData))
-            .catch(error => console.log(error))
+        .then(comments => setComments(comments))
     }, [])
 
     const addComment = (newComment: Comment) => {
@@ -48,3 +48,6 @@ export default function CommentList({ postId }: CommentsProps) {
             </div>
     );
 }
+)
+
+export default CommentList;

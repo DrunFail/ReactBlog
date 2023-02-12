@@ -1,38 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from  './Search.module.scss';
 
 interface SearchProps {
-    setDataPosts: any,
-    getPosts: () => void
+    search: string,
+    handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 
-
-export default function Search({ getPosts, setDataPosts }: SearchProps) {
-    const [search, setSearch] = useState('');
-
-    const querySearch = `q=${search}`
-    
-
-    useEffect(() => {
-        if (search) {
-            fetch(`https://jsonplaceholder.typicode.com/posts?${querySearch}`)
-                .then(response => {
-                    if (response.ok) {
-                        return response.json()
-                    }
-                    throw response
-                })
-                .then(searched => setDataPosts(searched))
-                .catch(error => console.error("Error fetching data: ", error))
-        } else {
-            getPosts()
-        }
-         
-             
-    }, [search])
-
-    
+export default function Search({search, handleSearch  }: SearchProps) {
 
     return (
         < >
@@ -40,7 +15,7 @@ export default function Search({ getPosts, setDataPosts }: SearchProps) {
                 type="search"
                 placeholder="поиск..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={handleSearch}
             />
         </>
     );

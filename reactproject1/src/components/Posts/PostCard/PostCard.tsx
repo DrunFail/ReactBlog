@@ -1,6 +1,8 @@
+import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import deleteImg from '../../../assets/delete.png';
 import editImg from '../../../assets/edit.png';
+import store from '../../../store';
 import CommentList from '../../Comments/CommentList/CommentLIst';
 import { Post } from '../../interfaces/interfaces';
 import EditPost from '../EditPost/EditPost';
@@ -9,12 +11,10 @@ import styles from './PostCard.module.scss';
 
 interface PostCardProps {
     post: Post,
-    deletePost: (id: number) => Promise<void>,
-    handleEdit: (postId: number, editedItem: Post) => Promise<void>
 }
 
 
-export default function PostCard({ post, deletePost, handleEdit }: PostCardProps) {
+const  PostCard = observer(({ post }: PostCardProps) => {
     const [editOpen, setEditOpen] = useState(false)
 
     const closeEditForm = () => {
@@ -32,8 +32,8 @@ export default function PostCard({ post, deletePost, handleEdit }: PostCardProps
 
                     <div className={styles.buttons}>
                         <img
-                            onClick={() => deletePost(post.id)}
-                            src={deleteImg} />
+                        src={deleteImg}
+                        onClick={() => store.removePost(post.id) }                    />
                         <img
                             onClick={() => setEditOpen(!editOpen)}
                             src={editImg} />
@@ -49,9 +49,8 @@ export default function PostCard({ post, deletePost, handleEdit }: PostCardProps
             {editOpen &&
                 <div className='editPost'>
                     <EditPost
-                        handleEdit={handleEdit}
                         post={post}
-                        closeEditForm={closeEditForm}
+                        closeEditForm={closeEditForm }
                     />
                 </div>
 
@@ -60,4 +59,6 @@ export default function PostCard({ post, deletePost, handleEdit }: PostCardProps
         </article>
 
     );
-}
+})
+
+export default PostCard;
