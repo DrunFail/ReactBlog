@@ -1,24 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './PostList.module.scss';
 import PostCard from '../PostCard/PostCard';
 import { Post } from '../../interfaces/interfaces';
+import { observer } from 'mobx-react-lite';
+import store from '../../../store';
 
 
 
 interface PostListProps {
-    deletePost: (id: number) => Promise<void>,
+    posts: Post[],
+    selectedPage: number,
+    limitPostOnPage: number,
     getCountPostOnPage: (count: number) => void,
-    dataPosts: Post[],
-    handleEdit: (postId: number, editedItem: Post) => Promise<void>
+    search: string
 }
 
 
 
-export default function PostList({ deletePost, handleEdit, getCountPostOnPage, dataPosts }: PostListProps) {
+const PostList = observer(({ posts, selectedPage, limitPostOnPage, getCountPostOnPage, search }: PostListProps) =>  {
     const options = [{ value: 10, label: 10 },
     { value: 20, label: 20 },
     { value: 100, label: 'все' }]
 
+    useEffect(() => {
+        store.fetchPosts(selectedPage, limitPostOnPage, search)
+    }, [selectedPage, limitPostOnPage, search])
 
 
 
@@ -40,13 +46,11 @@ export default function PostList({ deletePost, handleEdit, getCountPostOnPage, d
             <div className={styles.postList}>
 
             
-            {!dataPosts.length ? <p>no posts</p>
-                : dataPosts.map(post =>
+            {!posts.length ? <p>no posts</p>
+                : posts.map(post =>
                     <PostCard
                         key={post.id}
-                        deletePost={deletePost}
                         post={post}
-                        handleEdit={handleEdit }
                     />)
                 }
 
@@ -55,4 +59,7 @@ export default function PostList({ deletePost, handleEdit, getCountPostOnPage, d
                     
         </div>
     );
-}
+})
+
+
+export default PostList;
